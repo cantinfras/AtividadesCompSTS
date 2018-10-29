@@ -16,42 +16,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.edu.iftm.atividadeComplementar.domains.Aluno;
-import br.edu.iftm.atividadeComplementar.repositories.AlunoRepository;
-
+import br.edu.iftm.atividadeComplementar.domains.Atividade;
+import br.edu.iftm.atividadeComplementar.repositories.AtividadeRepository;
 
 @RestController
-@RequestMapping(value="/alunos")
-public class AlunoResource {
+@RequestMapping(value="/atividades")
+public class AtividadeResource {
 	
 	@Autowired
-	private AlunoRepository repo;
+	private AtividadeRepository repo;
 	
 	@GetMapping(value="like/{nome}")
 	public ResponseEntity<?> findByNome(@PathVariable String nome) {
-		List<Aluno> alunos = repo.findByNomeContainingIgnoreCase(nome);
-		if(alunos.size() > 0) {
-			return ResponseEntity.ok(alunos);
+		List<Atividade> atividades = repo.fidnByNomeContainingIgnoreCase(nome);
+		if(atividades.size() > 0) {
+			return ResponseEntity.ok(atividades);
 		}else {
 			return ResponseEntity.notFound().build();
 		}
 	}
 	
-	@GetMapping(value="{ra}")
-	public ResponseEntity<?> findByRa(@PathVariable Long ra) {
-		Optional<Aluno> alunoOptional = repo.findById(ra);
-		if(alunoOptional.isPresent()) {
-			return ResponseEntity.ok(alunoOptional);
+	@GetMapping(value="{codigo}")
+	public ResponseEntity<?> findByRa(@PathVariable Long codigo) {
+		Optional<Atividade> atividadeOptional = repo.findById(codigo);
+		if(atividadeOptional.isPresent()) {
+			return ResponseEntity.ok(atividadeOptional);
 		}else {
 			return ResponseEntity.notFound().build();
 		}
 	}
 	
-	@DeleteMapping(value="{ra}")
-	public ResponseEntity<?> deleteById(@PathVariable Long ra){
+	@DeleteMapping(value="{codigo}")
+	public ResponseEntity<?> deleteById(@PathVariable Long codigo){
 		try {
-			repo.deleteById(ra);
-			return ResponseEntity.ok(ra);
+			repo.deleteById(codigo);
+			return ResponseEntity.ok(codigo);
 		} catch(EmptyResultDataAccessException e) {
 			
 			return ResponseEntity.notFound().build();
@@ -60,12 +59,11 @@ public class AlunoResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> salvar(@RequestBody Aluno aluno){
-		Aluno a = repo.save(aluno);
+	public ResponseEntity<?> salvar(@RequestBody Atividade atividade){
+		Atividade a = repo.save(atividade);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-					.path("/{ra}").buildAndExpand(a.getRa()).toUri();
+					.path("/{codigo}").buildAndExpand(a.getCodigo()).toUri();
 		return ResponseEntity.created(location).build();
 	}
-
 
 }

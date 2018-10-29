@@ -1,7 +1,12 @@
 package br.edu.iftm.atividadeComplementar.domains;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Atividade {
 	
+	@Id
 	private Integer codigo;
 	
 	private String nome;
@@ -33,18 +38,6 @@ public class Atividade {
 	public Integer getHorasAproveitadasPorAtividade(Integer totalhorasComplementares) {
 		return getValorLimiteHorasAtividade(totalhorasComplementares) * percentualCargaHoraria / 100; 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 

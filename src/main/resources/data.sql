@@ -1,1 +1,1 @@
-insert into Aluno values (59320492,'carlos eduardo');
+insert into Aluno values (59320492,'Elton Horacio Ramos'),(59320493,'Charliston Ferreira'),(59320494,'Fernando Rodrigues');
